@@ -10,9 +10,9 @@
         opacity: ${card.match ? 0 : 1};
         cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? 'pointer' : ''};
       `"
-      @click="changeCurrentCard(card)"
     >
       <img
+        @click="changeCurrentCard(card)"
         :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
                         : require('../assets/image/z02.png')"
       >
@@ -121,14 +121,13 @@ export default {
 }
 
 .card {
-  width: 100px;
   display: inline-flex;
   border-radius: 5%;
   padding: 0.2rem;
 }
 .card > img {
   width: 100%;
-  height: 100%;
+  margin: auto
 }
 </style>
 
