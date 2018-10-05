@@ -1,65 +1,134 @@
 <template>
-  <section class="container">
-    <div>
-      <app-logo/>
-      <h1 class="title">
-        freecell
-      </h1>
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
-      </div>
+  <div class="main">
+    <div
+      class="card"
+      v-for="card in cards"
+      :key="card.suit + card.rank"
+      :style="`
+        width: ${100 / 13}%;
+        opacity: ${card.match ? 0 : 1};
+        cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? 'pointer' : ''};
+      `"
+      @click="changeCurrentCard(card)"
+    >
+      <img
+        :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
+                        : require('../assets/image/z02.png')"
+      >
     </div>
-  </section>
+    <div>Cards count: {{cardTotal}}</div>
+  </div>
 </template>
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
 
 export default {
-  components: {
-    AppLogo
-  }
+  data() {
+    const suits = ['s', 'h', 'd', 'c'];
+
+    const initialCards = [];
+    for(let i = 0; i < suits.length; i += 1) {
+      for(let j = 0; j < 13; j += 1) {
+        initialCards.push({
+          suit: suits[i],
+          rank: ('0' + (j + 1)).slice(-2),
+          turn: false,
+          match: false,
+        });
+
+      }
+    }
+
+    const cards = [];
+
+    for(let i = initialCards.length; i > 0; i -= 1) {
+      const targetIndex = Math.floor(Math.random() * i);
+      cards.push(initialCards[targetIndex]);
+      initialCards.splice(targetIndex, 1);
+    }
+
+    return {
+      cardTotal: cards.length,
+      suits,
+      cards,
+      currentCard: '',
+      judgeFlg: false,
+      returnCards: [],
+      deleteCards: [],
+    };
+  },
+  computed: {
+    setCardImage() {
+      return (i) => {
+        const test = '01';
+        return '~assets/image/s'+ test +'.png'
+      };
+    },
+  },
+  methods: {
+    changeCurrentCard(card) {
+
+      if(!this.returnCards.length && !this.deleteCards.length) {
+        card.turn = true;
+
+        if(this.currentCard !== '') {
+
+          if(card.rank === this.currentCard.rank
+              && card.suit !== this.currentCard.suit) {
+
+            this.deleteCards.push(card, this.currentCard);
+            setTimeout(this.deleteCard, 2000);
+            this.judgeFlg = true;
+
+          } else {
+            this.judgeFlg = false;
+          }
+
+          this.returnCards.push(card, this.currentCard);
+          setTimeout(this.returnCard, 3000);
+          this.currentCard = '';
+
+        } else {
+          this.currentCard = card
+        }
+      }      
+    },
+    returnCard() {
+      this.returnCards[0].turn = false;
+      this.returnCards[1].turn = false;
+      this.returnCards = [];
+    },
+    deleteCard() {
+      this.deleteCards[0].match = true;
+      this.deleteCards[1].match = true;
+      this.deleteCards = [];
+      this.cardTotal -= 1;
+    },
+  },
 }
 </script>
 
-<style>
-.container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+<style scoped>
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #16a085;
+  padding: 20px;
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* 1 */
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.card {
+  width: 100px;
+  height: 150px;
+  display: inline-block;
+  border-radius: 5%;
+  padding: 10px;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+.card > img {
+  width: 100%;
 }
 </style>
 
