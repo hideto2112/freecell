@@ -6,6 +6,7 @@
       :key="card.suit + card.rank"
       :style="`
         width: ${100 / 13}%;
+        height: ${100 / 4}%;
         opacity: ${card.match ? 0 : 1};
         cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? 'pointer' : ''};
       `"
@@ -21,8 +22,6 @@
 </template>
 
 <script>
-import AppLogo from '~/components/AppLogo.vue'
-
 export default {
   data() {
     const suits = ['s', 'h', 'd', 'c'];
@@ -59,6 +58,7 @@ export default {
     };
   },
   computed: {
+
     setCardImage() {
       return (i) => {
         const test = '01';
@@ -103,7 +103,7 @@ export default {
       this.deleteCards[0].match = true;
       this.deleteCards[1].match = true;
       this.deleteCards = [];
-      this.cardTotal -= 1;
+      this.cardTotal -= 2;
     },
   },
 }
@@ -122,13 +122,13 @@ export default {
 
 .card {
   width: 100px;
-  height: 150px;
-  display: inline-block;
+  display: inline-flex;
   border-radius: 5%;
-  padding: 10px;
+  padding: 0.2rem;
 }
 .card > img {
   width: 100%;
+  height: 100%;
 }
 </style>
 
