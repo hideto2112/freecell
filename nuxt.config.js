@@ -18,6 +18,24 @@ module.exports = {
   */
   loading: { color: '#3B8070' },
   /*
+  ** Nuxt.js modules
+  */
+  modules: [
+    '@nuxtjs/pwa',
+  ],
+  manifest: {
+    name: 'card-memory-pwa',
+    lang: 'ja',
+    short_name: 'Card Memory',
+    background_color: '#0f0',
+    display: 'standalone',
+    orientation: "landscape",
+    theme_color: '#f00',
+  },
+  workbox: {
+    dev: true, //開発環境でもPWA
+  },
+  /*
   ** Build configuration
   */
   build: {

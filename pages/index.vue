@@ -8,7 +8,7 @@
         width: ${100 / 13}%;
         height: ${100 / 4}%;
         opacity: ${card.match ? 0 : 1};
-        cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? 'pointer' : ''};
+        cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? '' : ''};
       `"
     >
       <img
@@ -58,7 +58,6 @@ export default {
     };
   },
   computed: {
-
     setCardImage() {
       return (i) => {
         const test = '01';
