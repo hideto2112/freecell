@@ -117,14 +117,13 @@ export default {
 
           if(card.rank === this.currentCard.rank
               && card.suit !== this.currentCard.suit) {
-            this.$ons.notification.toast('Matched!', { timeout: 1000, animation: 'fall' });
             this.deleteCards.push(card, this.currentCard);
             setTimeout(this.deleteCard, 2000);
             this.judgeFlg = true;
-
+            this.$ons.notification.toast('Matched!', { timeout: 1000, animation: 'fall' });
           } else {
-            this.$ons.notification.toast('Unmatch...', { timeout: 2000, animation: 'fall' });
             this.judgeFlg = false;
+            this.$ons.notification.toast('Unmatch...', { timeout: 2000, animation: 'fall' });
           }
 
           this.returnCards.push(card, this.currentCard);
