@@ -35,6 +35,7 @@ module.exports = {
   },
   workbox: {
     dev: true, //開発環境でもPWA
+    offlineAssets: ['assets/image/*'],
   },
   /*
   ** Build configuration

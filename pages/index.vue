@@ -18,7 +18,7 @@
         >
         <div>
           <img
-            @click="changeCurrentCard(card)"
+            @click="changeCurrentCard(card); "
             :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
                             : require('../assets/image/z02.png')"
             :style="`
@@ -28,6 +28,20 @@
           </div>
         </v-ons-button>
       </div>
+      <v-ons-dialog
+        cancelable
+        :visible.sync="finishFlg"
+      >
+        <p style="text-align: center">Congratulations!</p>
+      </v-ons-dialog>
+      <v-ons-alert-dialog modifier="rowfooter"
+        :title="'Congratulations!'"
+        :footer="{
+          OK: () => finishFlg = false
+        }"
+        :visible.sync="finishFlg"
+      >
+      </v-ons-alert-dialog>
     </v-ons-page>
   </div>
 </template>
@@ -79,6 +93,7 @@ export default {
       cards,
       currentCard: '',
       judgeFlg: false,
+      finishFlg: false,
       returnCards: [],
       deleteCards: [],
       fieldWide: 13,
@@ -95,19 +110,20 @@ export default {
   methods: {
     changeCurrentCard(card) {
 
-      if(!this.returnCards.length && !this.deleteCards.length) {
+      if(!card.match && card !== this.currentCard && !this.returnCards.length && !this.deleteCards.length) {
         card.turn = true;
 
         if(this.currentCard !== '') {
 
           if(card.rank === this.currentCard.rank
               && card.suit !== this.currentCard.suit) {
-
+            this.$ons.notification.toast('Matched!', { timeout: 1000, animation: 'fall' });
             this.deleteCards.push(card, this.currentCard);
             setTimeout(this.deleteCard, 2000);
             this.judgeFlg = true;
 
           } else {
+            this.$ons.notification.toast('Unmatch...', { timeout: 2000, animation: 'fall' });
             this.judgeFlg = false;
           }
 
@@ -130,6 +146,7 @@ export default {
       this.deleteCards[1].match = true;
       this.deleteCards = [];
       this.cardTotal -= 2;
+      if(!this.cardTotal) this.finishFlg = true;
     },
   },
 }
