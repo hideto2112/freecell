@@ -11,8 +11,8 @@
         v-for="card in cards"
         :key="card.suit + card.rank"
         :style="`
-          width: ${100 / 13 * 0.8}%;
-          margin: ${100 / 13 * 0.1}%;
+          width: ${100 / fieldWide * 0.8}%;
+          margin: ${100 / fieldWide * 0.1}%;
           opacity: ${card.match ? 0 : 1};
         `"
         >
@@ -22,7 +22,7 @@
             :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
                             : require('../assets/image/z02.png')"
             :style="`
-              cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? '' : ''};
+              cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? 'pointer' : ''};
             `"
           />
           </div>
@@ -44,6 +44,11 @@ import VueOnsen from 'vue-onsenui'; // This already imports 'onsenui'
 Vue.use(VueOnsen);
 
 export default {
+  mounted() {
+    if(window.innerWidth < window.innerHeight) {
+      this.fieldWide = 4;
+    }
+  },
   data() {
     const suits = ['s', 'h', 'd', 'c'];
 
@@ -76,6 +81,7 @@ export default {
       judgeFlg: false,
       returnCards: [],
       deleteCards: [],
+      fieldWide: 13,
     };
   },
   computed: {
@@ -136,13 +142,15 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #16a085;
   padding: 20px;
 }
 
 .card {
   display: inline-block;
   padding: 0;
+  border-radius: 0;
+  background-color: #009432;
+  box-shadow: none;
 }
 
 .card > div {
@@ -157,7 +165,6 @@ export default {
   transform: translate(-50%,-50%);
   width: 100%;
   height: 100%;
-  background: #fff;
   display:flex;
   justify-content: center;
   align-items: center;
