@@ -3,7 +3,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'freecell',
+    title: 'Memory',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -24,9 +24,10 @@ module.exports = {
     '@nuxtjs/pwa',
   ],
   manifest: {
-    name: 'card-memory-pwa',
+    name: 'Card Memory PWA',
     lang: 'ja',
     short_name: 'Card Memory',
+    start_url: '/',
     background_color: '#0f0',
     display: 'standalone',
     orientation: "landscape",

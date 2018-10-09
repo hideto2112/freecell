@@ -1,27 +1,48 @@
 <template>
   <div class="main">
-    <div
-      class="card"
-      v-for="card in cards"
-      :key="card.suit + card.rank"
-      :style="`
-        width: ${100 / 13}%;
-        height: ${100 / 4}%;
-        opacity: ${card.match ? 0 : 1};
-        cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? '' : ''};
-      `"
-    >
-      <img
-        @click="changeCurrentCard(card)"
-        :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
-                        : require('../assets/image/z02.png')"
-      >
-    </div>
-    <div>Cards count: {{cardTotal}}</div>
+    <v-ons-page>
+      <v-ons-toolbar>
+        <div class="center">Cards count: {{cardTotal}}</div>
+      </v-ons-toolbar>
+      <div class="background" style="background: #009432;"></div>
+      <div class="content">
+        <v-ons-button
+        class="card"
+        v-for="card in cards"
+        :key="card.suit + card.rank"
+        :style="`
+          width: ${100 / 13 * 0.8}%;
+          margin: ${100 / 13 * 0.1}%;
+          opacity: ${card.match ? 0 : 1};
+        `"
+        >
+        <div>
+          <img
+            @click="changeCurrentCard(card)"
+            :src="card.turn ? require('../assets/image/' + card.suit + card.rank + '.png')
+                            : require('../assets/image/z02.png')"
+            :style="`
+              cursor: ${(!card.turn && !card.match && !returnCards.length && !deleteCards.length) ? '' : ''};
+            `"
+          />
+          </div>
+        </v-ons-button>
+      </div>
+    </v-ons-page>
   </div>
 </template>
 
 <script>
+// Webpack CSS import
+import 'onsenui/css/onsenui.css';
+import 'onsenui/css/onsen-css-components.css';
+
+// JS import
+import Vue from 'vue';
+import VueOnsen from 'vue-onsenui'; // This already imports 'onsenui'
+
+Vue.use(VueOnsen);
+
 export default {
   data() {
     const suits = ['s', 'h', 'd', 'c'];
@@ -120,13 +141,26 @@ export default {
 }
 
 .card {
-  display: inline-flex;
-  border-radius: 5%;
-  padding: 0.2rem;
+  display: inline-block;
+  padding: 0;
 }
-.card > img {
+
+.card > div {
+  padding-top:150%;
+  position: relative;
+}
+
+.card > div > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
   width: 100%;
-  margin: auto
+  height: 100%;
+  background: #fff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 
