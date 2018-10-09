@@ -2,7 +2,7 @@
   <div class="main">
     <v-ons-page>
       <v-ons-toolbar>
-        <div class="center">Cards count: {{cardTotal}}</div>
+        <div class="center">Number of remaining cards: {{ cardTotal }}</div>
       </v-ons-toolbar>
       <div class="background" style="background: #009432;"></div>
       <div class="content">
