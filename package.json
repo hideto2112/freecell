@@ -1,5 +1,5 @@
 {
-  "name": "Memory",
+  "name": "cards-memory",
   "version": "1.0.0",
   "description": "Nuxt.js project",
   "author": "hideto2112 <39573967+hideto2112@users.noreply.github.com>",
@@ -22,7 +22,7 @@
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-vue": "^4.0.0",
-    "onsenui": "^2.10.5",
+    "onsenui": "^2.10.6",
     "vue-onsenui": "^2.6.1"
   }
 }

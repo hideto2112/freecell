@@ -1,4 +1,4 @@
-# freecell
+# cards-memory
 
 > Nuxt.js project
 
