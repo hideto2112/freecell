@@ -22,7 +22,7 @@
     "eslint-friendly-formatter": "3.0.0",
     "eslint-loader": "1.9.0",
     "eslint-plugin-vue": "4.7.1",
-    "onsenui": "2.10.6",
+    "onsenui": "2.10.8",
     "vue-onsenui": "2.6.1"
   }
 }
